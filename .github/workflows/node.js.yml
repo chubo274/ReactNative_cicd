@@ -29,9 +29,9 @@ jobs:
 
   android:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [18.x, 20.x, 22.x]
+    # strategy:
+    #   matrix:
+    #     node: [18.x, 20.x, 22.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -65,9 +65,9 @@ jobs:
 
   ios:
     runs-on: macos-latest
-    strategy:
-      matrix:
-        node: [18.x, 20.x, 22.x]
+    # strategy:
+    #   matrix:
+    #     node: [18.x, 20.x, 22.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
