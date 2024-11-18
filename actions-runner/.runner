@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 3,
+  "agentName": "chubos-MacBook-Pro",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus15.actions.githubusercontent.com/iRMamDhaLXUnItNc8XfQdgtn1IcoR8Wpo0lH8282D4fhi8Atwd/",
+  "gitHubUrl": "https://github.com/chubo274/ReactNative_cicd",
+  "workFolder": "_work"
+}
