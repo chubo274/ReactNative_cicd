@@ -41,32 +41,31 @@ jobs:
         with:
           node-version: 20
 
-      - name: Set up Java and Android SDK
-        uses: android-actions/setup-android@v2
-        with:
-          java-version: 17
+      # - name: Set up Java and Android SDK
+      #   uses: android-actions/setup-android@v2
+      #   with:
+      #     java-version: 17
 
       - name: Debug Java Version
         run: |
           echo "JAVA_HOME=$JAVA_HOME"
           java -version
           
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      # - uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/.gradle/caches
+      #       ~/.gradle/wrapper
+      #     key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-gradle-
 
       - name: Install dependencies
         run: yarn install
 
       - name: Build Android
         env:
-          JAVA_HOME: /usr/bin/java
-          PATH: $JAVA_HOME/bin:$PATH
+          PATH: /usr/bin/java
         run: |
           cd android
           ./gradlew assembleRelease
