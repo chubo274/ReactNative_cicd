@@ -40,7 +40,7 @@ const HomeScreen = () => {
       style={styles.btn}
     />
     <AppButton
-      title={'change url login in repositories to test'}
+      title={'change url login in repositories to testtttt'}
       onPress={callApi}
       style={styles.btn}
     />
