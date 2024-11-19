@@ -19,11 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
       - name: Check lint
         run: yarn lint
 
@@ -73,17 +68,12 @@ jobs:
 
       - name: Locate APK
         run: ls -R android/app/build/outputs/apk/release/
-
-      - name: Rename APK with Date-Time
-        run: |
-          DATE=$(date +'%Y%m%d-%H%M%S')
-          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-$DATE.apk
   
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: android/app/build/outputs/apk/release/app-release-*.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
 
   ios:
     runs-on: macos-latest
@@ -116,9 +106,9 @@ jobs:
         run: |
           cd ios
           xcodebuild \
-            -workspace YourApp.xcworkspace \
-            -scheme YourApp \
+            -workspace ReactNative.xcworkspace \
+            -scheme ReactNative \
             -configuration Release \
             -sdk iphoneos \
-            -archivePath build/YourApp.xcarchive \
+            -archivePath build/ReactNative.xcarchive \
             archive
