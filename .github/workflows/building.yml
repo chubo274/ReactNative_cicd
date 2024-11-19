@@ -44,6 +44,10 @@ jobs:
         with:
           node-version: 20
 
+      - name: Set up Java and Android SDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
       # - name: Set up Java and Android SDK
       #   uses: android-actions/setup-android@v2
       #   with:
