@@ -90,7 +90,10 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          cd ios
+          yarn install
+          pod install
         
       - name: Cache cocoapods
         uses: actions/cache@v3
@@ -100,15 +103,31 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-
 
-      - name: Build iOS
+      - name: Set up ruby env
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.1
+          bundler-cache: true
+ 
+      - name: Decode signing certificate into a file
         env:
-          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+         CERTIFICATE_BASE64: ${{ secrets.IOS_DIST_SIGNING_KEY }}
         run: |
-          cd ios
-          xcodebuild \
-            -workspace ReactNative.xcworkspace \
-            -scheme ReactNative \
-            -configuration Release \
-            -sdk iphoneos \
-            -archivePath build/ReactNative.xcarchive \
-            archive
+         echo $CERTIFICATE_BASE64 | base64 --decode > signing-cert.p12
+    
+      - name: Build & upload iOS binary
+        run: bundle exec fastlane ios build_upload_testflight
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.IOS_DIST_SIGNING_KEY_PASSWORD }}
+          SIGNING_KEY_FILE_PATH: signing-cert.p12
+ 
+      - name: Upload app-store ipa and dsyms to artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-store ipa & dsyms
+          path: |
+            ${{ github.workspace }}/example-iOS.ipa
+            ${{ github.workspace }}/*.app.dSYM.zip
