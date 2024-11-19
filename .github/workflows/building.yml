@@ -97,20 +97,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-
 
+      - name: Install Bundler
+        run: |
+          gem install bundler -v '>= 2.4.0'
+          bundle install
+
       - name: Setup ruby version
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-      - name: Install Bundler
-        run: |
-          gem install bundler -v '>= 2.4.0'
-
       - name: Install dependencies
         run: |
           cd ios
-          bundle install
           yarn install
           pod install
  
