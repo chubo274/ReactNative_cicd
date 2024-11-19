@@ -74,11 +74,16 @@ jobs:
       - name: Locate APK
         run: ls -R android/app/build/outputs/apk/release/
 
+      - name: Rename APK with Date-Time
+        run: |
+          DATE=$(date +'%Y%m%d-%H%M%S')
+          mv android/app/build/outputs/apk/release/app-release.apk android/app/build/outputs/apk/release/app-release-$DATE.apk
+  
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/app-release-*.apk
 
   ios:
     runs-on: macos-latest
