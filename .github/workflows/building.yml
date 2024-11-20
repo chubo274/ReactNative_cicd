@@ -106,11 +106,12 @@ jobs:
       - name: Install Bundler
         run: | # bundler install will follow by gemfile.lock first
           gem install bundler -v '>= 2.4.0'
+          cd ios
+          bundle install
 
       - name: Install dependencies
         run: |
           cd ios
-          bundle install
           yarn install
           pod install
  
@@ -121,7 +122,9 @@ jobs:
          echo $CERTIFICATE_BASE64 | base64 --decode > signing-cert.p12
     
       - name: Build & upload iOS binary
-        run: bundle exec fastlane ios build_upload_testflight
+        run: |
+          cd ios
+          bundle exec fastlane ios build_upload_testflight
         env:
           ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
           ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
