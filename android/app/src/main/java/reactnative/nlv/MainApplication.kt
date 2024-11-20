@@ -1,4 +1,4 @@
-package com.reactnative
+package reactnative.nlv
 
 import android.app.Application
 import com.facebook.react.PackageList

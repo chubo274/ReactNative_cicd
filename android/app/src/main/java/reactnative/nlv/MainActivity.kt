@@ -1,4 +1,4 @@
-package com.reactnative
+package reactnative.nlv
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
